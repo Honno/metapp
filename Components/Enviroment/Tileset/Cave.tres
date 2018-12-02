@@ -7,12 +7,17 @@
 custom_solver_bias = 0.0
 extents = Vector2( 16, 16 )
 
+[sub_resource type="RectangleShape2D" id=5]
+
+custom_solver_bias = 0.0
+extents = Vector2( 16, 16 )
+
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 16, 16 )
 
-[sub_resource type="ConvexPolygonShape2D" id=5]
+[sub_resource type="ConvexPolygonShape2D" id=9]
 
 custom_solver_bias = 0.0
 points = PoolVector2Array( -16, -16, 16, -16, 16, 8, 8, 16, -8, 16, -16, 8 )
@@ -42,16 +47,11 @@ extents = Vector2( 16, 16 )
 custom_solver_bias = 0.0
 points = PoolVector2Array( 8, 16, -16, 16, -16, -16, 16, -16, 16, 8 )
 
-[sub_resource type="ConvexPolygonShape2D" id=9]
-
-custom_solver_bias = 0.0
-points = PoolVector2Array( -16, 16, -16, -8, -8, -16, 8, -16, 16, -8, 16, 16 )
-
 [resource]
 
 0/name = "Top Left"
 0/texture = ExtResource( 1 )
-0/tex_offset = Vector2( 0, 0 )
+0/tex_offset = Vector2( 0, -32 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 32, 64 )
 0/is_autotile = false
@@ -61,11 +61,11 @@ points = PoolVector2Array( -16, 16, -16, -8, -8, -16, 8, -16, 16, -8, 16, 16 )
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "shape": SubResource( 1 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 16, 48 )
+"shape_transform": Transform2D( 1, 0, 0, 1, 16, 16 )
 } ]
 1/name = "Top Center"
 1/texture = ExtResource( 1 )
-1/tex_offset = Vector2( 0, 0 )
+1/tex_offset = Vector2( 0, -32 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 32, 0, 32, 64 )
 1/is_autotile = false
@@ -74,12 +74,12 @@ points = PoolVector2Array( -16, 16, -16, -8, -8, -16, 8, -16, 16, -8, 16, 16 )
 1/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 1 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 16, 48 )
+"shape": SubResource( 5 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 16, 16 )
 } ]
 2/name = "Top Right"
 2/texture = ExtResource( 1 )
-2/tex_offset = Vector2( 0, 0 )
+2/tex_offset = Vector2( 0, -32 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 64, 0, 32, 64 )
 2/is_autotile = false
@@ -89,7 +89,7 @@ points = PoolVector2Array( -16, 16, -16, -8, -8, -16, 8, -16, 16, -8, 16, 16 )
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "shape": SubResource( 1 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 16, 48 )
+"shape_transform": Transform2D( 1, 0, 0, 1, 16, 16 )
 } ]
 3/name = "Mid Left"
 3/texture = ExtResource( 1 )
@@ -183,12 +183,7 @@ points = PoolVector2Array( -16, 16, -16, -8, -8, -16, 8, -16, 16, -8, 16, 16 )
 9/is_autotile = false
 9/occluder_offset = Vector2( 16, 16 )
 9/navigation_offset = Vector2( 16, 16 )
-9/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"shape": SubResource( 9 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 16, 16 )
-} ]
+9/shapes = [  ]
 10/name = "Middle Single"
 10/texture = ExtResource( 1 )
 10/tex_offset = Vector2( 0, 0 )
@@ -214,7 +209,7 @@ points = PoolVector2Array( -16, 16, -16, -8, -8, -16, 8, -16, 16, -8, 16, 16 )
 11/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 5 ),
+"shape": SubResource( 9 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 16, 16 )
 } ]
 12/name = "Left Corner"
@@ -273,4 +268,5 @@ points = PoolVector2Array( -16, 16, -16, -8, -8, -16, 8, -16, 16, -8, 16, 16 )
 "shape": SubResource( 3 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 16, 16 )
 } ]
+_sections_unfolded = [ "1", "4" ]
 

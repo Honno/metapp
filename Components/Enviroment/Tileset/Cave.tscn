@@ -1,8 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Sprites/Enviroment/Cave.png" type="Texture" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 16, 16 )
+
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
 extents = Vector2( 16, 16 )
@@ -12,12 +17,12 @@ extents = Vector2( 16, 16 )
 custom_solver_bias = 0.0
 extents = Vector2( 16, 16 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
 extents = Vector2( 16, 16 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 16, 16 )
@@ -28,8 +33,9 @@ extents = Vector2( 16, 16 )
 
 [node name="Top Left" type="Sprite" parent="Nine Square" index="0"]
 
-position = Vector2( 16, 32 )
+position = Vector2( 16, 64 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -32 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 32, 64 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
@@ -47,17 +53,18 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nine Square/Top Left/StaticBody2D" index="0"]
 
-position = Vector2( 0, 16 )
+position = Vector2( 0, -16 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Top Center" type="Sprite" parent="Nine Square" index="1"]
 
-position = Vector2( 48, 32 )
+position = Vector2( 48, 64 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -32 )
 region_enabled = true
 region_rect = Rect2( 32, 0, 32, 64 )
-_sections_unfolded = [ "Region" ]
+_sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Nine Square/Top Center" index="0"]
 
@@ -68,21 +75,21 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-_sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nine Square/Top Center/StaticBody2D" index="0"]
 
-position = Vector2( 0, 16 )
-shape = SubResource( 1 )
+position = Vector2( 0, -16 )
+shape = SubResource( 5 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Top Right" type="Sprite" parent="Nine Square" index="2"]
 
-position = Vector2( 80, 32 )
+position = Vector2( 80, 64 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -32 )
 region_enabled = true
 region_rect = Rect2( 64, 0, 32, 64 )
-_sections_unfolded = [ "Region" ]
+_sections_unfolded = [ "Offset", "Region", "Transform", "Z Index" ]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Nine Square/Top Right" index="0"]
 
@@ -97,7 +104,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nine Square/Top Right/StaticBody2D" index="0"]
 
-position = Vector2( 0, 16 )
+position = Vector2( 0, -16 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
@@ -127,7 +134,6 @@ shape = SubResource( 2 )
 
 [node name="Mid Center" type="Sprite" parent="Nine Square" index="4"]
 
-editor/display_folded = true
 position = Vector2( 48, 80 )
 texture = ExtResource( 1 )
 region_enabled = true
@@ -151,7 +157,6 @@ shape = SubResource( 2 )
 
 [node name="Mid Right" type="Sprite" parent="Nine Square" index="5"]
 
-editor/display_folded = true
 position = Vector2( 80, 80 )
 texture = ExtResource( 1 )
 region_enabled = true
@@ -177,11 +182,15 @@ shape = SubResource( 2 )
 
 [node name="Top Single" type="Sprite" parent="Three Column" index="0"]
 
-position = Vector2( 112, 16 )
+position = Vector2( 112, 64 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -32 )
 region_enabled = true
-region_rect = Rect2( 96, 0, 32, 32 )
-_sections_unfolded = [ "Region" ]
+region_rect = Rect2( 96, 0, 32, 64 )
+_sections_unfolded = [ "Region", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Three Column/Top Single" index="0"]
 
@@ -192,16 +201,27 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
+_sections_unfolded = [ "Transform" ]
 
-[node name="Middle Single" type="Sprite" parent="Three Column" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Three Column/Top Single/StaticBody2D" index="0"]
 
-position = Vector2( 112, 48 )
+position = Vector2( 0, -16 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Mid Single" type="Sprite" parent="Three Column" index="1"]
+
+position = Vector2( 112, 96 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -32 )
 region_enabled = true
-region_rect = Rect2( 96, 32, 32, 32 )
-_sections_unfolded = [ "Region" ]
+region_rect = Rect2( 96, 32, 32, 64 )
+_sections_unfolded = [ "Region", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Three Column/Middle Single" index="0"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Three Column/Mid Single" index="0"]
 
 input_pickable = false
 collision_layer = 1
@@ -210,12 +230,17 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
+_sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Three Column/Middle Single/StaticBody2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Three Column/Mid Single/StaticBody2D" index="0"]
 
-shape = SubResource( 3 )
+position = Vector2( 0, -16 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Corners" type="Node" parent="." index="2"]
+
+editor/display_folded = true
 
 [node name="Left Corner" type="Sprite" parent="Corners" index="0"]
 
@@ -263,7 +288,6 @@ shape = SubResource( 4 )
 
 [node name="Right Corner" type="Sprite" parent="Corners" index="2"]
 
-editor/display_folded = true
 position = Vector2( 144, 80 )
 texture = ExtResource( 1 )
 region_enabled = true
@@ -285,6 +309,8 @@ bounce = 0.0
 shape = SubResource( 4 )
 
 [node name="Platforms" type="Node" parent="." index="3"]
+
+editor/display_folded = true
 
 [node name="Block" type="Sprite" parent="Platforms" index="0"]
 
