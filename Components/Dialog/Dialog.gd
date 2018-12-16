@@ -1,8 +1,6 @@
 extends Node2D
 
-onready var VBox = $VBoxContainer
-onready var LabelContainer = $VBoxContainer/Bubble/MarginContainer
-onready var Label = $VBoxContainer/Bubble/MarginContainer/Label
+onready var Label = $VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/Label
 
 const PUNCTUATION = ['.', '!', '?']
 const x = 1.00 # Rate of text display
@@ -36,6 +34,7 @@ func _ready():
 
 func _process(delta):
 	_debug()
+	pass
 
 func say(text):
 	_reset()
@@ -65,8 +64,6 @@ func _on_timer_timeout():
 	if not end:
 		Label.set_text(Label.get_text() + next_char)
 		
-		_stretch_x(VBox, LabelContainer.get_combined_minimum_size()[0])
-		
 		_decide_time()
 	
 	else:
@@ -79,25 +76,29 @@ func _start_timer(wait_time):
 	timer.set_wait_time(wait_time)
 	timer.start()
 
-func _stretch_x(node, amount):
-	node.set_size(Vector2(amount, node.get_size()[1]))
-	
+#func _stretch_x(node, amount):
+#	node.set_size(Vector2(amount, node.get_size()[1]))
+
+### Debug tools because who knows how Control nodes work
+
 func _debug():
 	print('>>>')
 	print(Label.get_text())
+	print(next_char)
+	print(text)
 	_print_nodes(self)
 	print('<<<')
 
 func _print_nodes(node):
 	for child in node.get_children():
-		var line = _pretty_size(child)
+		var line = _prettify(child)
 		if child.get_child_count() > 0:
 			print("[%s]" % line)
 			_print_nodes(child)
 		else:
-			print("-%s" % line)
+			print(line)
 
-func _pretty_size(node):
+func _prettify(node):
 	var name = node.get_name()
 	if node is Control:
 		return "%s : %s" % [node.get_name(), node.get_size()]
