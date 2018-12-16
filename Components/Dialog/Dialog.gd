@@ -1,6 +1,8 @@
-extends VBoxContainer
+extends Node2D
 
-onready var Label = $CenterContainer/MarginContainer/Label
+onready var VBox = $VBoxContainer
+onready var LabelContainer = $VBoxContainer/Bubble/MarginContainer
+onready var Label = $VBoxContainer/Bubble/MarginContainer/Label
 
 const PUNCTUATION = ['.', '!', '?']
 const x = 1.00 # Rate of text display
@@ -20,7 +22,6 @@ func _reset():
 	Label.set_text(String())
 	
 	timer = Timer.new()
-	timer.set_one_shot(true)
 	timer.connect('timeout', self, '_on_timer_timeout')
 	add_child(timer)
 	
@@ -34,11 +35,7 @@ func _ready():
 	hide()
 
 func _process(delta):
-	print('>>>')
-	print($CenterContainer.get_size())
-	print($CenterContainer/MarginContainer.get_size())
-	print($CenterContainer/MarginContainer/Label.get_size())
-	print('<<<')
+	_debug()
 
 func say(text):
 	_reset()
@@ -52,13 +49,13 @@ func say(text):
 
 func _decide_time():
 	if Label.get_text().length() != text_len:
-			next_char = text.substr(0, 1)
-			text = text.substr(1, text.length()-1)
-			
-			if next_char in PUNCTUATION:
-				_start_timer(PUNC_PRINT_TIME)
-			else:
-				_start_timer(CHAR_PRINT_TIME)
+		next_char = text.substr(0, 1)
+		text = text.substr(1, text.length()-1)
+		
+		if next_char in PUNCTUATION:
+			_start_timer(PUNC_PRINT_TIME)
+		else:
+			_start_timer(CHAR_PRINT_TIME)
 	
 	else:
 		_start_timer(END_LAG_TIME)
@@ -67,6 +64,9 @@ func _decide_time():
 func _on_timer_timeout():
 	if not end:
 		Label.set_text(Label.get_text() + next_char)
+		
+		_stretch_x(VBox, LabelContainer.get_combined_minimum_size()[0])
+		
 		_decide_time()
 	
 	else:
@@ -78,3 +78,28 @@ func _on_timer_timeout():
 func _start_timer(wait_time):
 	timer.set_wait_time(wait_time)
 	timer.start()
+
+func _stretch_x(node, amount):
+	node.set_size(Vector2(amount, node.get_size()[1]))
+	
+func _debug():
+	print('>>>')
+	print(Label.get_text())
+	_print_nodes(self)
+	print('<<<')
+
+func _print_nodes(node):
+	for child in node.get_children():
+		var line = _pretty_size(child)
+		if child.get_child_count() > 0:
+			print("[%s]" % line)
+			_print_nodes(child)
+		else:
+			print("-%s" % line)
+
+func _pretty_size(node):
+	var name = node.get_name()
+	if node is Control:
+		return "%s : %s" % [node.get_name(), node.get_size()]
+	else:
+		return name
