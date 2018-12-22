@@ -1,0 +1,4 @@
+[submodule "godot-yaml"]
+	path = godot-yaml
+	url = https://github.com/Beliaar/godot-yaml
+	ignore = dirty
