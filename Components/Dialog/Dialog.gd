@@ -32,10 +32,6 @@ func _reset():
 func _ready():
 	hide()
 
-func _process(delta):
-	_debug()
-	pass
-
 func say(text):
 	_reset()
 	is_running = true
@@ -75,32 +71,3 @@ func _on_timer_timeout():
 func _start_timer(wait_time):
 	timer.set_wait_time(wait_time)
 	timer.start()
-
-#func _stretch_x(node, amount):
-#	node.set_size(Vector2(amount, node.get_size()[1]))
-
-### Debug tools because who knows how Control nodes work
-
-func _debug():
-	print('>>>')
-	print(Label.get_text())
-	print(next_char)
-	print(text)
-	_print_nodes(self)
-	print('<<<')
-
-func _print_nodes(node):
-	for child in node.get_children():
-		var line = _prettify(child)
-		if child.get_child_count() > 0:
-			print("[%s]" % line)
-			_print_nodes(child)
-		else:
-			print(line)
-
-func _prettify(node):
-	var name = node.get_name()
-	if node is Control:
-		return "%s : %s" % [node.get_name(), node.get_size()]
-	else:
-		return name
