@@ -7,18 +7,17 @@ const STOP_FORCE = 2048
 
 const MAX_JUMP_HEIGHT = 80 # in pixels
 const JUMP_SPEED = 256
-const GRAVITY_PRE = int()
-const GRAVITY_POST = int()
 const PHI = ( 1 + sqrt(5) ) / 2
 var pre_ascent = true
+var GRAVITY_PRE = int()
+var GRAVITY_POST = int()
 
 var velocity = Vector2()
-var jump_pressed = false
 var jumping = false
 
-var current_animation = 'Idle'
 onready var sprite = $AnimatedSprite
 const ANIM_RUN_SPEED = 16 # Speed at which run animation plays
+var current_animation = 'Idle'
 
 func _ready():
 	GRAVITY_PRE = ( pow(JUMP_SPEED, 2) ) / ( 2 * MAX_JUMP_HEIGHT )
