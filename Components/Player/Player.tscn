@@ -12,7 +12,6 @@
 [ext_resource path="res://Components/Player/Assets/Sprites/Run/8.png" type="Texture" id=10]
 [ext_resource path="res://Components/Player/Assets/Sprites/Jump.png" type="Texture" id=11]
 
-
 [sub_resource type="SpriteFrames" id=1]
 
 animations = [ {
@@ -38,7 +37,7 @@ _sections_unfolded = [ "Resource" ]
 custom_solver_bias = 0.0
 extents = Vector2( 5, 13 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1

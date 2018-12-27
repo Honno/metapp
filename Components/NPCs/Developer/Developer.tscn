@@ -8,7 +8,6 @@
 [ext_resource path="res://Components/NPCs/Developer/Run/5.png" type="Texture" id=6]
 [ext_resource path="res://Components/NPCs/Developer/Run/6.png" type="Texture" id=7]
 
-
 [sub_resource type="SpriteFrames" id=1]
 
 animations = [ {
@@ -28,7 +27,7 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[node name="Developer" type="AnimatedSprite" index="0"]
+[node name="Developer" type="AnimatedSprite"]
 
 frames = SubResource( 1 )
 animation = "Idle"
