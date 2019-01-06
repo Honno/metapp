@@ -1,5 +1,7 @@
 extends Node2D
 
+signal end
+
 onready var Label = $VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/Label
 
 const PUNCTUATION = ['.', '!', '?']
@@ -8,21 +10,16 @@ const CHAR_PRINT_TIME = 0.075 * x
 const PUNC_PRINT_TIME = CHAR_PRINT_TIME * 3 # Punctuation
 const END_LAG_TIME = CHAR_PRINT_TIME * 10
 
-var timer
+var timer = Timer.new()
 var is_running
 var text
 var text_len
 var next_char
-var timer_finished
 var end
 
 func _reset():
 	Label.set_text(String())
-
-	timer = Timer.new()
-	timer.connect('timeout', self, '_on_timer_timeout')
-	add_child(timer)
-
+	
 	is_running = false
 	text = String()
 	text_len = int()
@@ -30,6 +27,9 @@ func _reset():
 	end = false
 
 func _ready():
+	timer.connect('timeout', self, '_on_timer_timeout')
+	add_child(timer)
+	
 	hide()
 
 func say(text):
@@ -65,8 +65,9 @@ func _on_timer_timeout():
 	else:
 		hide()
 		_reset()
-		remove_child(timer)
 		is_running = false
+		
+		emit_signal('end')
 
 func _start_timer(wait_time):
 	timer.set_wait_time(wait_time)
