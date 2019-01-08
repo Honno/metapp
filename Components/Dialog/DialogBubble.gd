@@ -2,7 +2,7 @@ extends Node2D
 
 signal end
 
-onready var Label = $VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/Label
+onready var Label = $VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/Label
 
 const PUNCTUATION = ['.', '!', '?']
 const x = 1.00 # Rate of text display
