@@ -19,9 +19,17 @@ onready var sprite = $AnimatedSprite
 const ANIM_RUN_SPEED = 16 # Speed at which run animation plays
 var current_animation = 'Idle'
 
+onready var Anchor = $DialogAnchor
+var anchor_absolute_x
+var anchor_y
+
 func _ready():
 	GRAVITY_PRE = ( pow(JUMP_SPEED, 2) ) / ( 2 * MAX_JUMP_HEIGHT )
 	GRAVITY_POST = GRAVITY_PRE * PHI
+	
+	var anchor_pos = Anchor.get_position()
+	anchor_absolute_x = abs(anchor_pos.x)
+	anchor_y = anchor_pos.y
 
 func _physics_process(delta):
 	### Storing useful information
@@ -91,22 +99,28 @@ func _physics_process(delta):
 	
 	if on_floor:
 		if velocity.x < -ANIM_RUN_SPEED:
-			sprite.scale.x = -1
+			_flip(-1)
 			new_animation = 'Run'
 		elif velocity.x > ANIM_RUN_SPEED:
-			sprite.scale.x = 1
+			_flip(1)
 			new_animation = 'Run'
 	elif jumping:
 		new_animation = 'Jump'
 		if left and not right:
-			sprite.scale.x = -1
+			_flip(-1)
 		if right and not left:
-			sprite.scale.x = 1
+			_flip(1)
 	
 	## Play out new animations
 	if new_animation != current_animation:
 		current_animation = new_animation
 		sprite.play(current_animation)
+
+func _flip(scale):
+	sprite.scale.x = scale
+	
+	Anchor.set_position(Vector2(scale * anchor_absolute_x, anchor_y))
+	
 
 onready var left = $RayCastLeft
 onready var center = $RayCastCenter
