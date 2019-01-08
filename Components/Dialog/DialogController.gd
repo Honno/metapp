@@ -2,17 +2,17 @@ extends Node
 
 signal end
 
-export(String, DIR) var translations_path = "res://Levels/Test/Translations"
-onready var Player = $"../../Player"
-export(Array, NodePath) var characters = [Player]
+export(String, DIR) var translations_path
+export(Array, NodePath) var characters
 
 var YAML = preload("res://bin/gdyaml.gdns").new()
-var bubble = preload("res://Components/Dialog/DialogBubble.tscn").instance()
+var bubble
 
 var dialog_script
 
 var dialog_queue = Array()
 var current_dialog = null
+var current_character
 
 func _ready():
 	## Loading up the script
@@ -24,14 +24,9 @@ func _ready():
 	var file_text = file.get_as_text()
 	
 	dialog_script = YAML.parse(file_text)
-	
-	## Add dialog bubble to the scene
-	add_child(bubble)
-	bubble.connect('end', self, '_on_bubble_end')
-	bubble.translate(Vector2(200, 400))
 
 func _process(delta):
-	bubble.set_global_position(Vector2(200, 200))
+	_position_bubble()
 
 func play_sequence(id):
 	var sequence = dialog_script[id]
@@ -62,12 +57,27 @@ func _enqueue_dialog(character, text):
 	dialog_queue.push_back(dialog_entry)
 	
 func _on_bubble_end():
+	remove_child(bubble)
+	
 	if dialog_queue.size() != 0:
 		_play_next_dialog()
 		
 func _play_next_dialog():
 	current_dialog = dialog_queue.pop_front()
+	
+	bubble = load("res://Components/Dialog/DialogBubble.tscn").instance()
+	bubble.connect('end', self, '_on_bubble_end')
+	add_child(bubble)
+	
 	bubble.say(current_dialog['text'])
+	current_character = _get_character_node(current_dialog['character'])
 	
 func _position_bubble():
-	pass
+	var anchor = current_character.get_node("./DialogAnchor")
+	bubble.set_position(anchor.get_global_position())
+	
+func _get_character_node(character):
+	for nodepath in characters:
+		var node = get_node(nodepath)
+		if node.get_name() == character:
+			return node
