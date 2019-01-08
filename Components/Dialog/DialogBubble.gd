@@ -10,32 +10,27 @@ const CHAR_PRINT_TIME = 0.075 * x
 const PUNC_PRINT_TIME = CHAR_PRINT_TIME * 3 # Punctuation
 const END_LAG_TIME = CHAR_PRINT_TIME * 10
 
-var timer = Timer.new()
-var is_running
 var text
 var text_len
 var next_char
 var end
+var timer
 
-func _reset():
+func _ready():
+	hide()
+	
 	Label.set_text(String())
 	
-	is_running = false
 	text = String()
 	text_len = int()
 	next_char = String()
 	end = false
-
-func _ready():
+	
+	timer = Timer.new()
 	timer.connect('timeout', self, '_on_timer_timeout')
 	add_child(timer)
-	
-	hide()
 
 func say(text):
-	_reset()
-	is_running = true
-
 	text_len = text.length()
 	self.text = text
 
@@ -64,10 +59,9 @@ func _on_timer_timeout():
 
 	else:
 		hide()
-		_reset()
-		is_running = false
 		
 		emit_signal('end')
+		queue_free()
 
 func _start_timer(wait_time):
 	timer.set_wait_time(wait_time)
