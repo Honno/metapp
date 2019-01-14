@@ -14,6 +14,9 @@ var dialog_queue = Array()
 var current_dialog = null
 var current_character
 
+var Anchor
+var initial_anchor_x
+
 func _ready():
 	## Loading up the script
 	var lang = 'en-GB'
@@ -26,7 +29,9 @@ func _ready():
 	dialog_script = YAML.parse(file_text)
 
 func _process(delta):
-	_position_bubble()
+	if current_dialog != null:
+		var anchor_pos = Anchor.get_global_position()
+		bubble.set_position(anchor_pos)
 
 func play_sequence(id):
 	var sequence = dialog_script[id]
@@ -61,6 +66,9 @@ func _on_bubble_end():
 	
 	if dialog_queue.size() != 0:
 		_play_next_dialog()
+	else:
+		current_dialog = null
+		Anchor = null
 		
 func _play_next_dialog():
 	current_dialog = dialog_queue.pop_front()
@@ -72,9 +80,8 @@ func _play_next_dialog():
 	bubble.say(current_dialog['text'])
 	current_character = _get_character_node(current_dialog['character'])
 	
-func _position_bubble():
-	var anchor = current_character.get_node("./DialogAnchor")
-	bubble.set_position(anchor.get_global_position())
+	Anchor = current_character.get_node("./DialogAnchor")
+	initial_anchor_x = Anchor.get_global_position().x
 	
 func _get_character_node(character):
 	for nodepath in characters:
