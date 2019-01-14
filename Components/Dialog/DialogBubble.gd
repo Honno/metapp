@@ -2,9 +2,13 @@ extends Node2D
 
 signal end
 
-export(NodePath) var DialogContainer
-export(NodePath) var TextContainer
-export(NodePath) var TextLabel
+export(NodePath) var DialogContainerPath
+export(NodePath) var TextContainerPath
+export(NodePath) var TextLabelPath
+
+onready var DialogContainer = get_node(DialogContainerPath)
+onready var TextContainer = get_node(TextContainerPath)
+onready var TextLabel = get_node(TextLabelPath)
 
 var prev_text_container_width
 
