@@ -2,7 +2,11 @@ extends Node2D
 
 signal end
 
-onready var Label = $VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/Label
+export(NodePath) var DialogContainer
+export(NodePath) var TextContainer
+export(NodePath) var TextLabel
+
+var prev_text_container_width
 
 const PUNCTUATION = ['.', '!', '?']
 const x = 1.00 # Rate of text display
@@ -19,16 +23,15 @@ var timer
 func _ready():
 	hide()
 	
-	Label.set_text(String())
+	prev_text_container_width = TextContainer.get_size().x
 	
-	text = String()
-	text_len = int()
-	next_char = String()
-	end = false
+	TextLabel.set_text(String())
 	
 	timer = Timer.new()
 	timer.connect('timeout', self, '_on_timer_timeout')
 	add_child(timer)
+	
+	DialogContainer.connect('draw', self, '_on_DialogContainer_draw')
 
 func say(text):
 	text_len = text.length()
@@ -36,9 +39,12 @@ func say(text):
 
 	show()
 	_decide_time()
+	
+func set_offset_x(offset):
+	player_offset_x = offset
 
 func _decide_time():
-	if Label.get_text().length() != text_len:
+	if TextLabel.get_text().length() != text_len:
 		next_char = text.substr(0, 1)
 		text = text.substr(1, text.length()-1)
 
@@ -51,10 +57,14 @@ func _decide_time():
 		_start_timer(END_LAG_TIME)
 		end = true
 
+func _start_timer(wait_time):
+	timer.set_wait_time(wait_time)
+	timer.start()
+
 func _on_timer_timeout():
 	if not end:
-		Label.set_text(Label.get_text() + next_char)
-
+		TextLabel.set_text(TextLabel.get_text() + next_char)
+		
 		_decide_time()
 
 	else:
@@ -63,6 +73,9 @@ func _on_timer_timeout():
 		emit_signal('end')
 		queue_free()
 
-func _start_timer(wait_time):
-	timer.set_wait_time(wait_time)
-	timer.start()
+func _on_DialogContainer_draw():
+	var text_container_width = TextContainer.get_size().x
+	var width_increased_by = text_container_width - prev_text_container_width
+	DialogContainer.margin_left -= width_increased_by / 2
+	
+	prev_text_container_width = text_container_width
