@@ -6,6 +6,7 @@ export(String, DIR) var translations_path
 export(Array, NodePath) var characters
 
 var YAML = preload("res://bin/gdyaml.gdns").new()
+var BubbleScene = preload("res://Components/Dialog/DialogBubble.tscn")
 var bubble
 
 var dialog_script
@@ -32,6 +33,7 @@ func _process(delta):
 	if current_dialog != null:
 		var anchor_pos = Anchor.get_global_position()
 		bubble.set_position(anchor_pos)
+		bubble.set_player_offset_x(anchor_pos.x - initial_anchor_x)
 
 func play_sequence(id):
 	var sequence = dialog_script[id]
@@ -73,7 +75,7 @@ func _on_bubble_end():
 func _play_next_dialog():
 	current_dialog = dialog_queue.pop_front()
 	
-	bubble = load("res://Components/Dialog/DialogBubble.tscn").instance()
+	bubble = BubbleScene.instance()
 	bubble.connect('end', self, '_on_bubble_end')
 	add_child(bubble)
 	

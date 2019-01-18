@@ -16,24 +16,16 @@ font_data = ExtResource( 3 )
 
 [node name="DialogBubble" type="Node2D"]
 script = ExtResource( 1 )
-DialogContainerPath = NodePath("VBoxContainer")
-TextContainerPath = NodePath("VBoxContainer/HBoxContainer")
-TextLabelPath = NodePath("VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/Label")
+TextContainerPath = NodePath("HBoxContainer")
+TextLabelPath = NodePath("HBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/Label")
+TailTexturePath = NodePath("Tail")
+tail_margin = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_bottom = 1.0
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = -6.0
 margin_top = -25.0
 margin_right = 13.0
-rect_min_size = Vector2( 19, 25 )
-size_flags_horizontal = 3
-size_flags_vertical = 0
-custom_constants/separation = -1
-alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 19.0
-margin_bottom = 19.0
+margin_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 19, 19 )
@@ -41,11 +33,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 custom_constants/separation = 0
 alignment = 1
-__meta__ = {
-"_edit_group_": true
-}
 
-[node name="SideLeft" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+[node name="SideLeft" type="TextureRect" parent="HBoxContainer"]
 margin_right = 6.0
 margin_bottom = 19.0
 grow_horizontal = 2
@@ -56,7 +45,8 @@ size_flags_vertical = 0
 texture = ExtResource( 2 )
 stretch_mode = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+editor/display_folded = true
 margin_left = 6.0
 margin_right = 19.0
 margin_bottom = 19.0
@@ -66,11 +56,8 @@ rect_min_size = Vector2( 13, 19 )
 size_flags_horizontal = 3
 size_flags_vertical = 0
 custom_constants/separation = -1
-__meta__ = {
-"_edit_group_": true
-}
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/HBoxContainer"]
 margin_right = 8.0
 margin_bottom = 19.0
 grow_horizontal = 2
@@ -80,7 +67,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 custom_constants/separation = 0
 
-[node name="BorderTop" type="ColorRect" parent="VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="BorderTop" type="ColorRect" parent="HBoxContainer/HBoxContainer/VBoxContainer"]
 margin_right = 8.0
 margin_bottom = 1.0
 rect_min_size = Vector2( 8, 1 )
@@ -88,7 +75,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 color = Color( 0, 0, 0, 1 )
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 1.0
 margin_right = 8.0
 margin_bottom = 18.0
@@ -97,7 +84,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 custom_styles/panel = SubResource( 1 )
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
 margin_right = 8.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
@@ -106,7 +93,7 @@ custom_constants/margin_top = 1
 custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer"]
 margin_top = 1.0
 margin_right = 8.0
 margin_bottom = 14.0
@@ -116,7 +103,7 @@ size_flags_vertical = 0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 
-[node name="BorderBottom" type="ColorRect" parent="VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="BorderBottom" type="ColorRect" parent="HBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 8.0
 margin_bottom = 19.0
@@ -125,7 +112,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 color = Color( 0, 0, 0, 1 )
 
-[node name="SideRight" type="TextureRect" parent="VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="SideRight" type="TextureRect" parent="HBoxContainer/HBoxContainer"]
 margin_left = 7.0
 margin_right = 13.0
 margin_bottom = 19.0
@@ -137,34 +124,12 @@ size_flags_vertical = 0
 texture = ExtResource( 4 )
 stretch_mode = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
-margin_top = 18.0
-margin_right = 19.0
-margin_bottom = 25.0
-grow_horizontal = 2
-grow_vertical = 2
-rect_min_size = Vector2( 19, 0 )
-size_flags_horizontal = 3
-size_flags_vertical = 0
-custom_constants/margin_right = 5
-custom_constants/margin_left = 6
-
-[node name="Tail" type="TextureRect" parent="VBoxContainer/MarginContainer"]
-margin_left = 6.0
-margin_right = 14.0
-margin_bottom = 7.0
+[node name="Tail" type="TextureRect" parent="."]
+margin_top = -7.0
+margin_right = 8.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 0
 texture = ExtResource( 5 )
 stretch_mode = 3
-
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_top = -1.0
-margin_right = 1.0
-color = Color( 0, 0, 0, 1 )
 

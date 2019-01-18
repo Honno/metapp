@@ -2,15 +2,21 @@ extends Node2D
 
 signal end
 
-export(NodePath) var DialogContainerPath
 export(NodePath) var TextContainerPath
 export(NodePath) var TextLabelPath
+export(NodePath) var TailTexturePath
+export(int) var tail_margin
 
-onready var DialogContainer = get_node(DialogContainerPath)
 onready var TextContainer = get_node(TextContainerPath)
 onready var TextLabel = get_node(TextLabelPath)
+onready var Tail = get_node(TailTexturePath)
 
-var prev_text_container_width
+var container_width
+var container_margin_min
+var container_margin_max
+var tail_width
+
+var player_offset_x = 0
 
 const PUNCTUATION = ['.', '!', '?']
 const x = 1.00 # Rate of text display
@@ -27,15 +33,16 @@ var timer
 func _ready():
 	hide()
 	
-	prev_text_container_width = TextContainer.get_size().x
+	container_width = TextContainer.get_size().x
+	tail_width = Tail.get_size().x
 	
-	TextLabel.set_text(String())
+	_calculate_margin_range()
 	
 	timer = Timer.new()
 	timer.connect('timeout', self, '_on_timer_timeout')
 	add_child(timer)
 	
-	DialogContainer.connect('draw', self, '_on_DialogContainer_draw')
+	TextContainer.connect('draw', self, '_on_TextContainer_draw')
 
 func say(text):
 	text_len = text.length()
@@ -44,8 +51,10 @@ func say(text):
 	show()
 	_decide_time()
 	
-func set_offset_x(offset):
+func set_player_offset_x(offset):
+	var offset_delta = offset - player_offset_x
 	player_offset_x = offset
+	TextContainer.margin_left = clamp(TextContainer.margin_left - offset_delta, container_margin_min, container_margin_max)
 
 func _decide_time():
 	if TextLabel.get_text().length() != text_len:
@@ -76,10 +85,11 @@ func _on_timer_timeout():
 		
 		emit_signal('end')
 		queue_free()
+		
+func _on_TextContainer_draw():
+	_calculate_margin_range()
 
-func _on_DialogContainer_draw():
-	var text_container_width = TextContainer.get_size().x
-	var width_increased_by = text_container_width - prev_text_container_width
-	DialogContainer.margin_left -= width_increased_by / 2
-	
-	prev_text_container_width = text_container_width
+func _calculate_margin_range():
+	var container_width_delta = TextContainer.get_size().x - container_width
+	container_margin_min = -container_width_delta - tail_margin
+	container_margin_max = container_width_delta - tail_margin
