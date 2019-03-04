@@ -99,28 +99,27 @@ func _physics_process(delta):
 	
 	if on_floor:
 		if velocity.x < -ANIM_RUN_SPEED:
-			_flip(-1)
+			_flip_h(true)
 			new_animation = 'Run'
 		elif velocity.x > ANIM_RUN_SPEED:
-			_flip(1)
+			_flip_h(false)
 			new_animation = 'Run'
 	elif jumping:
 		new_animation = 'Jump'
 		if left and not right:
-			_flip(-1)
+			_flip_h(true)
 		if right and not left:
-			_flip(1)
+			_flip_h(false)
 	
 	## Play out new animations
 	if new_animation != current_animation:
 		current_animation = new_animation
 		sprite.play(current_animation)
 
-func _flip(scale):
-	sprite.scale.x = scale
+func _flip_h(flip_h):
+	sprite.scale.x = -1 if flip_h else 1
 	
-	Anchor.set_position(Vector2(scale * anchor_absolute_x, anchor_y))
-	
+	Anchor.flip(flip_h)
 
 onready var left = $RayCastLeft
 onready var center = $RayCastCenter

@@ -65,6 +65,7 @@ func _enqueue_dialog(character, text):
 	
 func _on_bubble_end():
 	remove_child(bubble)
+	Anchor.disconnect('flipped', self, '_on_Anchor_flipped')
 	
 	if dialog_queue.size() != 0:
 		_play_next_dialog()
@@ -79,14 +80,20 @@ func _play_next_dialog():
 	bubble.connect('end', self, '_on_bubble_end')
 	add_child(bubble)
 	
-	bubble.say(current_dialog['text'])
 	current_character = _get_character_node(current_dialog['character'])
 	
 	Anchor = current_character.get_node("./DialogAnchor")
 	initial_anchor_x = Anchor.get_global_position().x
+	Anchor.connect('flipped', self, '_on_Anchor_flipped')
+	
+	bubble.flip_tail(Anchor.is_flipped())
+	bubble.say(current_dialog.text)
 	
 func _get_character_node(character):
 	for nodepath in characters:
 		var node = get_node(nodepath)
 		if node.get_name() == character:
 			return node
+			
+func _on_Anchor_flipped(flip_h):
+	bubble.flip_tail(flip_h)

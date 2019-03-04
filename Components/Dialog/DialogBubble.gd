@@ -19,7 +19,7 @@ var tail_width
 var player_offset_x = 0
 
 const PUNCTUATION = ['.', '!', '?']
-const x = 1.00 # Rate of text display
+const x = 1 # Rate of text display
 const CHAR_PRINT_TIME = 0.075 * x
 const PUNC_PRINT_TIME = CHAR_PRINT_TIME * 3 # Punctuation
 const END_LAG_TIME = CHAR_PRINT_TIME * 10
@@ -47,14 +47,26 @@ func _ready():
 func say(text):
 	text_len = text.length()
 	self.text = text
-
+	
 	show()
 	_decide_time()
 	
 func set_player_offset_x(offset):
 	var offset_delta = offset - player_offset_x
 	player_offset_x = offset
-	TextContainer.margin_left = clamp(TextContainer.margin_left - offset_delta, container_margin_min, container_margin_max)
+	
+	var value = TextContainer.margin_left - offset_delta
+	TextContainer.margin_left = clamp(value, container_margin_min, container_margin_max)
+
+func flip_tail(flip_h):
+	if flip_h:
+		Tail.rect_scale = Vector2(-1,1)
+		Tail.margin_left = tail_width + tail_margin
+	else:
+		Tail.rect_scale = Vector2(1,1)
+		Tail.margin_left = 0
+	
+	_calculate_margin_range()
 
 func _decide_time():
 	if TextLabel.get_text().length() != text_len:

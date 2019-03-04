@@ -20,6 +20,4 @@ func _process(delta):
 	$DialogAnchor.position.y = original_anchor_y + offset.y
 
 func _flip():
-	var scale = -1 if flip_h else 1
-	
-	$DialogAnchor.position.x = scale * anchor_absolute_x
+	DialogAnchor.flip(flip_h)

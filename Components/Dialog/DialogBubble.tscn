@@ -7,11 +7,9 @@
 [ext_resource path="res://Components/Dialog/Assets/Sprites/DialogTail.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
-
 bg_color = Color( 1, 1, 0.901961, 1 )
 
 [sub_resource type="DynamicFont" id=2]
-
 font_data = ExtResource( 3 )
 
 [node name="DialogBubble" type="Node2D"]
@@ -29,7 +27,7 @@ margin_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 19, 19 )
-size_flags_horizontal = 3
+size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/separation = 0
 alignment = 1
