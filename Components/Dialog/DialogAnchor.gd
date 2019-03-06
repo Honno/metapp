@@ -3,7 +3,10 @@ extends Position2D
 signal flipped
 
 var flip_h = false
-var absolute_x = abs(position.x)
+var absolute_x
+
+func _ready():
+	absolute_x = position.x if position.x >= 0 else -position.x
 
 func flip(flip_h):
 	self.flip_h = flip_h
