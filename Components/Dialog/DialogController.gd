@@ -1,6 +1,7 @@
 extends Node
 
-signal end
+signal bubble_end
+signal dialog_end
 
 export(String, DIR) var translations_path
 export(Array, NodePath) var characters
@@ -55,6 +56,9 @@ func play_sequence(id):
 	if current_dialog == null:
 		_play_next_dialog()
 
+func cut():
+	current_dialog = null
+
 func _enqueue_dialog(character, text):
 	var dialog_entry = {
 		'character': character,
@@ -67,11 +71,14 @@ func _on_bubble_end():
 	remove_child(bubble)
 	Anchor.disconnect('flipped', self, '_on_Anchor_flipped')
 	
+	emit_signal('bubble_end')
+	
 	if dialog_queue.size() != 0:
 		_play_next_dialog()
 	else:
 		current_dialog = null
 		Anchor = null
+		emit_signal('dialog_end')
 		
 func _play_next_dialog():
 	current_dialog = dialog_queue.pop_front()
