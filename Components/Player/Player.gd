@@ -15,7 +15,7 @@ var GRAVITY_POST = int()
 var velocity = Vector2()
 var jumping = false
 
-onready var sprite = $AnimatedSprite
+onready var PlayerSprite = $AnimatedSprite
 const ANIM_RUN_SPEED = 16 # Speed at which run animation plays
 var current_animation = 'Idle'
 
@@ -114,10 +114,10 @@ func _physics_process(delta):
 	## Play out new animations
 	if new_animation != current_animation:
 		current_animation = new_animation
-		sprite.play(current_animation)
+		PlayerSprite.play(current_animation)
 
 func _flip_h(flip_h):
-	sprite.scale.x = -1 if flip_h else 1
+	PlayerSprite.scale.x = -1 if flip_h else 1
 	
 	Anchor.flip(flip_h)
 
